@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تنبيه أمني خطير</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: #000000;
+            color: #ff0000;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+        /* خلفية برمجية متحركة */
+        .bg-effect {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.15;
+            font-size: 14px;
+            line-height: 1.5;
+            overflow: hidden;
+            white-space: nowrap;
+            user-select: none;
+            pointer-events: none;
+            padding: 20px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .warning-box {
+            position: relative;
+            z-index: 2;
+            background-color: rgba(10, 0, 0, 0.92);
+            border: 3px solid #ff3344;
+            padding: 40px;
+            max-width: 650px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(255, 51, 68, 0.6);
+            border-radius: 12px;
+        }
+        
+        /* أيقونة القلب النابض */
+        .icon {
+            font-size: 65px;
+            margin-bottom: 20px;
+            display: inline-block;
+            color: #ff3344;
+            text-shadow: 0 0 15px #ff3344;
+            animation: beat 0.8s infinite alternate;
+        }
+
+        @keyframes beat {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.18); }
+        }
+
+        h1 {
+            font-size: 30px;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            color: #ff3344;
+            text-shadow: 0 0 10px #ff3344;
+        }
+        .message {
+            font-size: 24px;
+            color: #ffffff;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            font-weight: 500;
+        }
+        /* تمييز الكلمة الإسبانية بلون مختلف وجذاب */
+        .spanish-text {
+            color: #ff3344;
+            font-weight: bold;
+            font-family: 'Georgia', serif;
+            display: block;
+            margin-top: 10px;
+            font-size: 28px;
+            text-shadow: 0 0 8px rgba(255, 51, 68, 0.6);
+        }
+        /* تصميم العداد التنازلي */
+        .countdown-container {
+            margin-top: 20px;
+            font-size: 20px;
+            color: #ff3344;
+            font-weight: bold;
+        }
+        #timer {
+            font-size: 36px;
+            display: block;
+            margin-top: 10px;
+            text-shadow: 0 0 8px #ff3344;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- النص البرمجي في الخلفية -->
+    <div class="bg-effect">
+        01000100 01000001 01001110 01000111 01000101 01010010 <br>
+        SYSTEM_FAILURE_DETECTED // PORT_443_COMPROMISED // INTRUSION_SUCCESSFUL <br>
+        BYPASSING_FIREWALL... OK <br>
+        EXTRACTING_DATABASE_CREDENTIALS... DONE <br>
+        LOVE_SYSTEM_OVERRIDE // HEART_RATE_CRITICAL <br>
+        01100011 01110010 01101001 01110100 01101001 01100011 01100001 01101100
+    </div>
+
+    <div class="warning-box">
+        <div class="icon">❤️</div>
+        
+        <!-- عنوان الواجهة الرئيسي -->
+        <h1>⚠️ تنبيه: تم اختراق النظام بالكامل ⚠️</h1>
+        
+        <!-- العبارة الرومانسية الجديدة والمعدلة بالكامل -->
+        <p class="message">
+            تم الاختراق .. رداً على اختراقك لقلبي ..
+            <span class="spanish-text">Mi linda</span>
+        </p>
+
+        <!-- العداد التنازلي التفاعلي -->
+        <div class="countdown-container">
+            الوقت المتبقي لامتلاك النظام بالكامل:
+            <span id="timer">10:00</span>
+        </div>
+    </div>
+
+    <script>
+        // كود تشغيل العداد التنازلي (10 دقائق)
+        let timeInSeconds = 600; 
+        const timerElement = document.getElementById('timer');
+
+        const countdown = setInterval(() => {
+            let minutes = Math.floor(timeInSeconds / 60);
+            let seconds = timeInSeconds % 60;
+
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+
+            timerElement.textContent = `${minutes}:${seconds}`;
+
+            if (timeInSeconds <= 0) {
+                clearInterval(countdown);
+                timerElement.textContent = "❤️ تمت السيطرة على القلب بنجاح";
+            } else {
+                timeInSeconds--;
+            }
+        }, 1000);
+    </script>
+
+</body>
+</html>
