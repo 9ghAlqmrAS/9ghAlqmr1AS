@@ -1,143 +1,198 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تنبيه أمني خطير</title>
+    <title>System Alert</title>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        /* إعدادات الشاشة الأساسية */
         body {
-            background-color: #000000;
-            color: #ff0000;
-            font-family: 'Courier New', Courier, monospace;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            margin: 0;
             overflow: hidden;
-            position: relative;
+            background: #000;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            user-select: none;
         }
-        /* خلفية برمجية متحركة */
-        .bg-effect {
+
+        /* لوحة الماتريكس الخلفية */
+        canvas {
+            display: block;
             position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        /* الطبقة الشفافة الحمراء لزيادة الحماس */
+        .overlay {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            opacity: 0.15;
-            font-size: 14px;
-            line-height: 1.5;
-            overflow: hidden;
-            white-space: nowrap;
-            user-select: none;
+            background: rgba(255, 0, 0, 0.03);
             pointer-events: none;
-            padding: 20px;
-        }
-        .warning-box {
-            position: relative;
             z-index: 2;
-            background-color: rgba(10, 0, 0, 0.9);
-            border: 3px solid #ff0000;
-            padding: 40px;
-            max-width: 650px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { background: rgba(255, 0, 0, 0.02); }
+            50% { background: rgba(255, 0, 0, 0.08); }
+            100% { background: rgba(255, 0, 0, 0.02); }
+        }
+
+        /* نافذة الاختراق الرومانسية الاحترافية */
+        .hacker-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
             width: 90%;
+            max-width: 450px;
+            background: rgba(10, 10, 10, 0.95);
+            border: 2px solid #ff3344;
+            box-shadow: 0 0 30px rgba(255, 51, 68, 0.6);
+            border-radius: 12px;
             text-align: center;
-            box-shadow: 0 0 30px rgba(255, 0, 0, 0.6);
-            border-radius: 5px;
+            padding: 35px 25px;
+            z-index: 1000;
+            direction: rtl;
+            transition: all 0.3s ease-in-out;
+            opacity: 0;
         }
-        .icon {
-            font-size: 60px;
-            margin-bottom: 20px;
-            animation: blink 1s infinite;
-        }
-        h1 {
-            font-size: 32px;
-            margin-bottom: 20px;
-            letter-spacing: 2px;
-            text-shadow: 0 0 10px #ff0000;
-        }
-        .message {
-            font-size: 20px;
-            color: #ffffff;
-            line-height: 1.6;
-            margin-bottom: 25px;
-        }
-        /* تصميم العداد التنازلي */
-        .countdown-container {
-            margin-top: 20px;
-            font-size: 24px;
-            color: #ff0000;
-            font-weight: bold;
-            letter-spacing: 1px;
-        }
-        #timer {
-            font-size: 36px;
+
+        .hacker-popup.show {
             display: block;
-            margin-top: 10px;
-            text-shadow: 0 0 8px #ff0000;
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
         }
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
+
+        /* أيقونة القلب النابض */
+        .heart-icon {
+            font-size: 60px;
+            color: #ff3344;
+            animation: beat 0.8s infinite alternate;
+            margin-bottom: 15px;
+            display: inline-block;
+            text-shadow: 0 0 15px #ff3344;
+        }
+
+        @keyframes beat {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.18); }
+        }
+
+        /* عنوان التنبيه */
+        .hacker-popup h2 {
+            color: #ff3344;
+            margin: 0 0 20px 0;
+            font-size: 26px;
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px rgba(255, 51, 68, 0.5);
+        }
+
+        /* نص الرسالة الخاص بك */
+        .hacker-popup p {
+            color: #ffffff;
+            font-size: 19px;
+            line-height: 1.6;
+            margin: 0 0 30px 0;
+            font-weight: 500;
+        }
+
+        /* زر الإغلاق الاحترافي */
+        .hacker-popup button {
+            background: linear-gradient(45deg, #ff3344, #ff5566);
+            color: white;
+            border: none;
+            padding: 12px 35px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 51, 68, 0.4);
+            transition: 0.3s ease;
+        }
+
+        .hacker-popup button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 51, 68, 0.7);
         }
     </style>
 </head>
 <body>
 
-    <!-- النص البرمجي العشوائي في الخلفية -->
-    <div class="bg-effect">
-        01000100 01000001 01001110 01000111 01000101 01010010 <br>
-        SYSTEM_FAILURE_DETECTED // PORT_443_COMPROMISED // INTRUSION_SUCCESSFUL <br>
-        BYPASSING_FIREWALL... OK <br>
-        EXTRACTING_DATABASE_CREDENTIALS... DONE <br>
-        01100011 01110010 01101001 01110100 01101001 01100011 01100001 01101100
-    </div>
+    <!-- تأثيرات الخلفية والوميض -->
+    <canvas id="matrix"></canvas>
+    <div class="overlay"></div>
 
-    <div class="warning-box">
-        <div class="icon">☠️</div>
-        
-        <!-- عنوان الواجهة الرئيسي -->
-        <h1>تنبيه: تم اختراق النظام بالكامل</h1>
-        
-        <!--  -->
-        <p class="message">
-            لقد تم تشفير ملفات جهازك بالكامل والوصول إلى كافة الحسابات بنجاح. أي محاولة لإغلاق هذه الصفحة ستؤدي إلى مسح البيانات فوراً.
-        </p>
-
-        <!-- العداد التنازلي التفاعلي -->
-        <div class="countdown-container">
-            الوقت المتبقي لتدمير البيانات:
-            <span id="timer">10:00</span>
-        </div>
+    <!-- نافذة الاختراق والمفاجأة -->
+    <div id="hackerPopup" class="hacker-popup">
+        <div class="heart-icon">❤️</div>
+        <h2>⚠️ تنبيه اختراق أمني ⚠️</h2>
+        <p>تم اختراق الجهاز .. رداً على اختراقك لقلبي يا وجه القمر</p>
+        <button onclick="closePopup()">امتلاك النظام (إغلاق)</button>
     </div>
 
     <script>
-        // كود تشغيل العداد التنازلي (10 دقائق)
-        let timeInSeconds = 600; 
-        const timerElement = document.getElementById('timer');
+        // إعداد شاشة الأكواد المتساقطة
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
 
-        const countdown = setInterval(() => {
-            let minutes = Math.floor(timeInSeconds / 60);
-            let seconds = timeInSeconds % 60;
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
-            // إضافة صفر على اليسار إذا كانت الأرقام أقل من 10
-            minutes = minutes < 10 ? '0' + minutes : minutes;
-            seconds = seconds < 10 ? '0' + seconds : seconds;
+        // دمج الحروف اللاتينية والرموز لتبدو أكثر تعقيداً واحترافية
+        const chars = '01010101ABCDEFGHIJKLMNOPQRSTUVWXYZ☠️⚠️⚡';
+        const charArr = chars.split('');
 
-            timerElement.textContent = `${minutes}:${seconds}`;
+        const fontSize = 14;
+        const columns = canvas.width / fontSize;
+        const rainDrops = Array(Math.floor(columns)).fill(1);
 
-            if (timeInSeconds <= 0) {
-                clearInterval(countdown);
-                timerElement.textContent = "00:00 - تم مسح البيانات";
-            } else {
-                timeInSeconds--;
+        const draw = () => {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // استخدام لون أخضر هكرز كلاسيكي للخلفية المتساقطة
+            ctx.fillStyle = '#00ff66'; 
+            ctx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < rainDrops.length; i++) {
+                const text = charArr[Math.floor(Math.random() * charArr.length)];
+                ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+
+                if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    rainDrops[i] = 0;
+                }
+                rainDrops[i]++;
             }
-        }, 1000);
-    </script>
+        };
 
+        const interval = setInterval(draw, 33);
+
+        // إظهار المفاجأة والرسالة بعد 3.5 ثوانٍ بتأثير سلس
+        setTimeout(() => {
+            const popup = document.getElementById('hackerPopup');
+            popup.style.display = 'block';
+            setTimeout(() => popup.classList.add('show'), 10);
+        }, 3500);
+
+        // دالة الإغلاق
+        function closePopup() {
+            const popup = document.getElementById('hackerPopup');
+            popup.classList.remove('show');
+            setTimeout(() => popup.style.display = 'none', 300);
+        }
+
+        // الحفاظ على أبعاد الشاشة عند التكبير أو التصغير
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
 </body>
 </html>
+
