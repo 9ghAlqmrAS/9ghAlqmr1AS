@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تنبيه أمني خطير</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: #000000;
+            color: #ff0000;
+            font-family: 'Courier New', Courier, monospace;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+        /* خلفية برمجية متحركة */
+        .bg-effect {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.15;
+            font-size: 14px;
+            line-height: 1.5;
+            overflow: hidden;
+            white-space: nowrap;
+            user-select: none;
+            pointer-events: none;
+            padding: 20px;
+        }
+        .warning-box {
+            position: relative;
+            z-index: 2;
+            background-color: rgba(10, 0, 0, 0.9);
+            border: 3px solid #ff0000;
+            padding: 40px;
+            max-width: 650px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.6);
+            border-radius: 5px;
+        }
+        .icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+            animation: blink 1s infinite;
+        }
+        h1 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px #ff0000;
+        }
+        .message {
+            font-size: 20px;
+            color: #ffffff;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+        /* تصميم العداد التنازلي */
+        .countdown-container {
+            margin-top: 20px;
+            font-size: 24px;
+            color: #ff0000;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        #timer {
+            font-size: 36px;
+            display: block;
+            margin-top: 10px;
+            text-shadow: 0 0 8px #ff0000;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- النص البرمجي العشوائي في الخلفية -->
+    <div class="bg-effect">
+        01000100 01000001 01001110 01000111 01000101 01010010 <br>
+        SYSTEM_FAILURE_DETECTED // PORT_443_COMPROMISED // INTRUSION_SUCCESSFUL <br>
+        BYPASSING_FIREWALL... OK <br>
+        EXTRACTING_DATABASE_CREDENTIALS... DONE <br>
+        01100011 01110010 01101001 01110100 01101001 01100011 01100001 01101100
+    </div>
+
+    <div class="warning-box">
+        <div class="icon">☠️</div>
+        
+        <!-- عنوان الواجهة الرئيسي -->
+        <h1>تنبيه: تم اختراق النظام بالكامل</h1>
+        
+        <!--  -->
+        <p class="message">
+            لقد تم تشفير ملفات جهازك بالكامل والوصول إلى كافة الحسابات بنجاح. أي محاولة لإغلاق هذه الصفحة ستؤدي إلى مسح البيانات فوراً.
+        </p>
+
+        <!-- العداد التنازلي التفاعلي -->
+        <div class="countdown-container">
+            الوقت المتبقي لتدمير البيانات:
+            <span id="timer">10:00</span>
+        </div>
+    </div>
+
+    <script>
+        // كود تشغيل العداد التنازلي (10 دقائق)
+        let timeInSeconds = 600; 
+        const timerElement = document.getElementById('timer');
+
+        const countdown = setInterval(() => {
+            let minutes = Math.floor(timeInSeconds / 60);
+            let seconds = timeInSeconds % 60;
+
+            // إضافة صفر على اليسار إذا كانت الأرقام أقل من 10
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+
+            timerElement.textContent = `${minutes}:${seconds}`;
+
+            if (timeInSeconds <= 0) {
+                clearInterval(countdown);
+                timerElement.textContent = "00:00 - تم مسح البيانات";
+            } else {
+                timeInSeconds--;
+            }
+        }, 1000);
+    </script>
+
+</body>
+</html>
