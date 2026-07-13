@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iPhone Simulator</title>
+    <!-- استدعاء أيقونات FontAwesome للملفات والصور -->
+    <link rel="stylesheet" href="https://cloudflare.com">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #050505;
+            color: #00ff00;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* حاوية الشاشة المحاكية للايفون */
+        .phone-screen {
+            width: 375px;
+            height: 812px;
+            background-color: #000;
+            border: 4px solid #333;
+            border-radius: 40px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.2);
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        /* المرحلة 1: جاري الاختراق */
+        .hacking-status {
+            text-align: center;
+            font-size: 1.2rem;
+        }
+
+        .progress-bar {
+            width: 200px;
+            height: 4px;
+            background-color: #222;
+            margin-top: 15px;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            width: 0%;
+            height: 100%;
+            background-color: #00ff00;
+            animation: load 2s linear forwards;
+        }
+
+        /* المرحلة 2: الجمجمة */
+        .skull-screen {
+            display: none;
+            text-align: center;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .skull-icon {
+            font-size: 80px;
+            color: #ff0055;
+            text-shadow: 0 0 20px #ff0055;
+            animation: pulse 1s infinite alternate;
+        }
+
+        /* المرحلة 3 و 4: النصوص والملفات */
+        .text-phrase {
+            display: none;
+            font-size: 1.8rem;
+            color: #fff;
+            text-shadow: 0 0 10px #00ff00;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .success-screen {
+            display: none;
+            text-align: center;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .success-title {
+            color: #00ff00;
+            font-size: 1.6rem;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px rgba(0,255,0,0.5);
+        }
+
+        .apps-container {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            animation: bounceIn 0.5s ease-out forwards;
+        }
+
+        .app-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .app-item i {
+            font-size: 45px;
+            background: linear-gradient(145deg, #1e1e1e, #111);
+            padding: 15px;
+            border-radius: 15px;
+            border: 1px solid #333;
+            transition: transform 0.2s;
+        }
+
+        .app-item:hover i {
+            transform: scale(1.1);
+            border-color: #00ff00;
+        }
+
+        .app-item span {
+            font-size: 0.9rem;
+            font-family: sans-serif;
+        }
+
+        /* الأنيميشن */
+        @keyframes load {
+            to { width: 100%; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes pulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
+        }
+
+        @keyframes bounceIn {
+            0% { opacity: 0; transform: scale(0.3); }
+            50% { opacity: 0.9; transform: scale(1.1); }
+            80% { transform: scale(0.89); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="phone-screen">
+        
+        <!-- 1. شاشة جاري الاختراق البدائية -->
+        <div id="step1" class="hacking-status">
+            <p>SYSTEM BYPASSING...</p>
+            <p style="font-size: 0.9rem; margin-top: 5px; color: #888;">iOS Exploiting</p>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+        </div>
+
+        <!-- 2. شاشة الجمجمة -->
+        <div id="step2" class="skull-screen">
+            <div class="skull-icon">☠</div>
+            <p style="margin-top: 15px; color: #ff0055; letter-spacing: 2px;">SYSTEM INTRUSION</p>
+        </div>
+
+        <!-- 3. عبارة ياوجه القمر -->
+        <div id="step3" class="text-phrase">
+            يااوجه الققمر
+        </div>
+
+        <!-- 4. شاشة تم الاختراق مع الملفات والصور -->
+        <div id="step4" class="success-screen">
+            <div class="success-title">تم الاختراق بنجاح</div>
+            
+            <div class="apps-container">
+                <div class="app-item">
+                    <i class="fa-solid fa-folder-open" style="color: #ffcc00;"></i>
+                    <span>الملفات</span>
+                </div>
+                <div class="app-item">
+                    <i class="fa-solid fa-images" style="color: #ff3b30;"></i>
+                    <span>الصور</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // العناصر الرئيسية
+        const step1 = document.getElementById('step1');
+        const step2 = document.getElementById('step2');
+        const step3 = document.getElementById('step3');
+        const step4 = document.getElementById('step4');
+
+        // التتابع الزمني للواجهة
+        
+        // بعد 2 ثانية: إخفاء التحميل وإظهار الجمجمة
+        setTimeout(() => {
+            step1.style.display = 'none';
+            step2.style.display = 'block';
+            
+            // بعد 2 ثانية أخرى من ظهور الجمجمة: إخفاؤها وإظهار (يااوجه الققمر)
+            setTimeout(() => {
+                step2.style.display = 'none';
+                step3.style.display = 'block';
+                
+                // بعد ثواني (مثلاً 2.5 ثانية): إخفاء العبارة وإظهار تم الاختراق والأيقونات
+                setTimeout(() => {
+                    step3.style.display = 'none';
+                    step4.style.display = 'block';
+                }, 2500);
+
+            }, 2000);
+
+        }, 2000);
+    </script>
+</body>
+</html>
