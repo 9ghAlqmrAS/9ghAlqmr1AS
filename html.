@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>محاكاة واجهة نظام</title>
+    <style>
+        /* إعدادات الشاشة الخلفية */
+        body {
+            background-color: #0b0c10;
+            color: #1f2833;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        /* حاوية الشاشة الرئيسية */
+        .screen-container {
+            text-align: center;
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            padding: 20px;
+        }
+
+        /* العبارة الأولى: تم الوصول لجميع البيانات */
+        .alert-text {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #ff3333;
+            text-shadow: 0 0 10px rgba(255, 51, 51, 0.5);
+            opacity: 1;
+            transform: scale(1);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            animation: glitch 1s linear infinite;
+        }
+
+        /* العبارة الثانية: بسيطر عليك 💑 */
+        .control-text {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #66fcf1;
+            text-shadow: 0 0 15px rgba(102, 252, 241, 0.7);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.5);
+            width: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 1s cubic-bezier(0.175, 0.885, 0.32, 1.275), transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* تأثير الظهور للعبارة الثانية */
+        .control-text.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        /* تأثير الاختفاء للعبارة الأولى */
+        .alert-text.fade-out {
+            opacity: 0;
+            transform: scale(0.8);
+        }
+
+        /* تأثير وميض رقمي (Glitch) خفيف للعبارة الأولى */
+        @keyframes glitch {
+            0% { opacity: 1; }
+            50% { opacity: 0.8; text-shadow: 0 0 15px rgba(255, 51, 51, 0.8); }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="screen-container">
+        <!-- العبارة الأولى -->
+        <div id="firstMessage" class="alert-text">
+            ⚠️ تم الوصول لجميع البيانات
+        </div>
+
+        <!-- العبارة الثانية -->
+        <div id="secondMessage" class="control-text">
+            بسيطر عليك 💑
+        </div>
+    </div>
+
+    <script>
+        // دالة التحكم في توقيتات النص وحركته
+        document.addEventListener("DOMContentLoaded", () => {
+            const firstMsg = document.getElementById("firstMessage");
+            const secondMsg = document.getElementById("secondMessage");
+
+            // بعد 3 ثوانٍ، تختفي العبارة الأولى وتظهر الثانية
+            setTimeout(() => {
+                // إخفاء العبارة الأولى بنعومة
+                firstMsg.classList.add("fade-out");
+
+                // إظهار العبارة الثانية بعد اختفاء الأولى مباشرة
+                setTimeout(() => {
+                    firstMsg.style.display = "none";
+                    secondMsg.classList.add("show");
+                }, 800); // وقت متوافق مع حركة الـ CSS
+
+            }, 3000); // 3000 ميلي ثانية تعني 3 ثوانٍ
+        });
+    </script>
+</body>
+</html>
